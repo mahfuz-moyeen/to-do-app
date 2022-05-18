@@ -1,30 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useQuery } from 'react-query';
 import AddForm from './AddForm';
 import ShowList from './ShowList';
 
 const Home = () => {
-    const [lists, setLists] = useState([]);
-    const [reload, setReload] = useState(false);
 
-    useEffect(() => {
-        fetch('http://localhost:5000/lists')
-            .then(res => res.json())
-            .then(data => setLists(data))
-    }, [reload])
+    const { isLoading, data: lists, refetch } = useQuery('repoData', () =>
+        fetch('http://localhost:5000/lists').then(res =>
+            res.json()
+        ))
+
+    if (isLoading) {
+        return <p>loading....</p>
+    }
 
     return (
         <div>
             <div>
                 <h1 className='text-center my-10 text-4xl'>To-do app</h1>
             </div>
-            <AddForm setReload={setReload} reload={reload} />
+            <AddForm refetch={refetch} />
             <div className='w-10/12 mx-auto grid grid-cols-1 gap-5'>
                 {
                     lists.map(list => <ShowList
                         key={list?._id}
                         list={list}
-                        reload={reload}
-                        setReload={setReload} />)
+                        refetch={refetch} />)
                 }
             </div>
         </div>

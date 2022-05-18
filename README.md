@@ -3,3 +3,4 @@
 ## Use Items
 * React.js
 * React Tailwind
+* React Query

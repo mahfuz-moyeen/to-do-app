@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AddForm = ({ reload, setReload }) => {
+const AddForm = ({ refetch}) => {
 
     const handleForm = event => {
         event.preventDefault();
@@ -20,7 +20,7 @@ const AddForm = ({ reload, setReload }) => {
         })
             .then((res) => res.json())
             .then((data) => {
-                setReload(!reload)
+                refetch();
             });
         event.target.reset();
     }
