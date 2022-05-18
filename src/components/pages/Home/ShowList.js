@@ -1,4 +1,5 @@
 import React from 'react';
+import { CheckCircleIcon, TrashIcon } from '@heroicons/react/outline'
 
 const ShowList = ({ list, refetch }) => {
 
@@ -27,22 +28,20 @@ const ShowList = ({ list, refetch }) => {
 
 
     return (
-        <div className='flex justify-center gap-4'>
-            {list?.taskComplete ?
-                <div className='flex gap-2 line-through'>
-                    <h1>{name}</h1>
-                    <h1>{description}</h1>
+        <div className='flex justify-between glass text-black p-2 rounded-lg items-center'>
+            <div className='p-2'>
+                <h1 className='text-lg lg:text-xl text-primary'>{name}</h1>
+                <p className='text-sm lg:text-lg break-all'>{description}</p>
+            </div>
+            <div className='flex justify-center gap-2'>
+                <div className="tooltip" data-tip="Complete">
+                    <button onClick={() => handleComplete(_id)} className='btn btn-success'><CheckCircleIcon className="h-5 w-5 text-white" /></button>
                 </div>
-                :
-                <div className='flex gap-2 '>
-                    <h1>{name}</h1>
-                    <h1>{description}</h1>
+                <div className="tooltip" data-tip="Delete">
+                    <button onClick={() => handleDelete(_id)} className='btn btn-error'><TrashIcon className="h-5 w-5 text-white" /></button>
                 </div>
-            }
-            <button onClick={() => handleComplete(_id)} className='p-2 bg-green-500 text-white'>Complete</button>
-
-            <button onClick={() => handleDelete(_id)} className='p-2 bg-red-500 text-white'>Delete</button>
-        </div>
+            </div>
+        </div >
     );
 };
 
