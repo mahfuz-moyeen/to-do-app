@@ -9,3 +9,4 @@
 * React Query
 * daisyui
 * heroicons
+* react-toastify

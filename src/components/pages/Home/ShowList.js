@@ -1,28 +1,30 @@
 import React from 'react';
 import { CheckCircleIcon, TrashIcon } from '@heroicons/react/outline'
+import { toast } from 'react-toastify';
 
 const ShowList = ({ list, refetch }) => {
 
-    const { _id, name, description } = list;
+    const { _id, name, description} = list;
 
     const handleComplete = id => {
-        fetch(`http://localhost:5000/list/${id}`, {
+        fetch(`https://to-do-app121.herokuapp.com/list/${id}`, {
             method: "PUT",
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 refetch()
+                toast.success("Complete task")
             });
     }
 
     const handleDelete = id => {
-        fetch(`http://localhost:5000/list/${id}`, {
+        fetch(`https://to-do-app121.herokuapp.com/list/${id}`, {
             method: "DELETE",
         })
             .then((res) => res.json())
             .then((data) => {
                 refetch()
+                toast.error("Delete task")
             });
     }
 
@@ -30,8 +32,17 @@ const ShowList = ({ list, refetch }) => {
     return (
         <div className='flex justify-between glass text-black p-2 rounded-lg items-center'>
             <div className='p-2'>
-                <h1 className='text-lg lg:text-xl text-primary'>{name}</h1>
-                <p className='text-sm lg:text-lg break-all'>{description}</p>
+                { list?.taskComplete ?
+                    <>
+                        <h1 className='line-through text-lg lg:text-xl text-primary'>{name}</h1>
+                        <p className='line-through text-sm lg:text-lg break-all'>{description}</p>
+                    </>
+                    :
+                    <>
+                        <h1 className='text-lg lg:text-xl text-primary'>{name}</h1>
+                        <p className='text-sm lg:text-lg break-all'>{description}</p>
+                    </>
+                }
             </div>
             <div className='flex justify-center gap-2'>
                 <div className="tooltip" data-tip="Complete">

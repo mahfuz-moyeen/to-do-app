@@ -4,6 +4,7 @@ import AddForm from './AddForm';
 import ShowList from './ShowList';
 import bg from '../../../image/bg.jpg'
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { signOut } from 'firebase/auth';
 import auth from '../../../firebase.init';
 import Spinner from '../../Shared/Spinner.js/Spinner';
 
@@ -12,7 +13,7 @@ const Home = () => {
 
 
     const { isLoading, data: lists, refetch } = useQuery('repoData', () =>
-        fetch(`http://localhost:5000/lists?email:${user.email}`).then(res =>
+        fetch(`https://to-do-app121.herokuapp.com/lists?email=${user.email}`).then(res =>
             res.json()
         ))
 
@@ -24,7 +25,12 @@ const Home = () => {
         <div style={{ background: `url(${bg})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed' }} className='min-h-screen' >
 
             <div className='w-11/12 lg:w-8/12 mx-auto flex flex-col justify-center min-h-screen'>
+                <div className='flex justify-end'>
+                    <button onClick={() => signOut(auth)}
+                        className=' btn btn-ghost text-black'>logout</button>
+                </div>
                 <h1 className='text-center text-primary font-semibold my-10 text-2xl lg:text-4xl'>TO-DO APP</h1>
+
 
                 <AddForm refetch={refetch} />
 
