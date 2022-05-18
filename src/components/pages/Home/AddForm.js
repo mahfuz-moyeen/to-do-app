@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AddForm = () => {
+const AddForm = ({ reload, setReload }) => {
 
     const handleForm = event => {
         event.preventDefault();
@@ -12,7 +12,7 @@ const AddForm = () => {
             headers: {
                 "Content-type": "application/json",
             },
-            
+
             body: JSON.stringify({
                 name: name,
                 description: description
@@ -20,7 +20,7 @@ const AddForm = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
+                setReload(!reload)
             });
         event.target.reset();
     }
